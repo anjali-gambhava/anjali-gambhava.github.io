@@ -1,0 +1,1454 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anjali Gambhava · Cloud & DevSecOps Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ─── Reset & Root ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #05080f;
+      --surface: #0c111d;
+      --surface-2: #111827;
+      --border: rgba(255,255,255,0.07);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,0.10);
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --blue: #38bdf8;
+      --purple: #a78bfa;
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-dim: #334155;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: none; outline: none; font-family: inherit; }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 3px; }
+
+    /* ─── Animations ─── */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+      50% { opacity: 0.85; transform: scale(1.15); box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes bar-fill {
+      from { width: 0; }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(34,197,94,0.3); }
+      50% { box-shadow: 0 0 20px rgba(34,197,94,0.6); }
+    }
+
+    /* ─── Utility ─── */
+    .mono { font-family: var(--mono); }
+    .green { color: var(--green); }
+    .amber { color: var(--amber); }
+    .blue { color: var(--blue); }
+    .purple { color: var(--purple); }
+    .muted { color: var(--text-muted); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-header {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-title .hash { color: var(--green); margin-right: 4px; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 48px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px; border-radius: 999px;
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 500;
+    }
+    .pill-green { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+    .pill-purple { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+    .pill-blue { background: rgba(56,189,248,0.12); color: var(--blue); border: 1px solid rgba(56,189,248,0.25); }
+    .pill-amber { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+    .dot-green {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,197,94,0.08);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--green); color: #000;
+    }
+    .btn-primary:hover { background: #16a34a; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(34,197,94,0.35); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.2); background: var(--surface-2); transform: translateY(-1px); }
+    .tag {
+      display: inline-block; padding: 3px 8px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 4px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted);
+    }
+    section { padding: 96px 0; }
+
+    /* ─── NAV ─── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 24px;
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+    }
+    #nav.scrolled {
+      background: rgba(5,8,15,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-color: var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: var(--mono); font-size: 1rem; font-weight: 500;
+      color: var(--text); display: flex; align-items: center; gap: 2px;
+    }
+    .nav-logo .cursor {
+      display: inline-block; width: 10px; height: 1.1em;
+      background: var(--green); vertical-align: middle; margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted);
+      padding: 6px 12px; border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-status {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2);
+      padding: 5px 12px; border-radius: 999px;
+      font-family: var(--mono); font-size: 0.72rem; color: var(--green);
+    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: var(--text); border-radius: 1px; transition: all 0.3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(5,8,15,0.97); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); z-index: 99;
+      flex-direction: column; padding: 16px 24px; gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--mono); font-size: 0.9rem; color: var(--text-muted);
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--green); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 80px 0 60px;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .hero-role {
+      font-family: var(--mono); font-size: 0.8rem; color: var(--green);
+      margin-bottom: 20px; letter-spacing: 0.05em;
+    }
+    .hero-name {
+      font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700;
+      line-height: 1.1; margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .hero-tagline {
+      font-size: 1.25rem; font-weight: 500; color: var(--text);
+      margin-bottom: 10px;
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--text-muted); margin-bottom: 32px;
+      font-family: var(--mono);
+    }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    .hero-meta {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .hero-meta .up-arrow { color: var(--green); }
+    .uptime-counter {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim);
+    }
+    .uptime-counter span { color: var(--green); }
+    .status-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+    .status-card-header {
+      background: var(--surface-2); padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .macos-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .md-red { background: #ff5f57; }
+    .md-amber { background: #febc2e; }
+    .md-green { background: #28c840; }
+    .status-card-title {
+      font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted);
+      margin-left: 8px; letter-spacing: 0.08em;
+    }
+    .status-card-body { padding: 20px; }
+    .status-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .status-row:last-of-type { border-bottom: none; }
+    .status-row-left { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; }
+    .status-row-right {
+      font-family: var(--mono); font-size: 0.72rem; color: var(--green);
+    }
+    .status-footer {
+      border-top: 1px solid var(--border); padding: 12px 20px;
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted);
+    }
+
+    /* ─── METRICS STRIP ─── */
+    #metrics {
+      padding: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .metrics-track {
+      display: flex;
+      animation: ticker-scroll 30s linear infinite;
+      width: max-content;
+    }
+    .metrics-track:hover { animation-play-state: paused; }
+    .metric-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 20px 40px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .metric-number {
+      font-family: var(--mono); font-size: 1.5rem; font-weight: 500;
+      color: var(--green);
+    }
+    .metric-label { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+
+    /* ─── CHANGELOG ─── */
+    #changelog {}
+    .changelog-entry {
+      position: relative; padding-left: 32px; margin-bottom: 48px;
+    }
+    .changelog-entry::before {
+      content: ''; position: absolute; left: 10px; top: 36px; bottom: -48px;
+      width: 1px; background: var(--border);
+    }
+    .changelog-entry:last-child::before { display: none; }
+    .changelog-dot {
+      position: absolute; left: 0; top: 24px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--surface-2); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .changelog-dot.active { border-color: var(--green); background: var(--green-dim); }
+    .changelog-dot.active::after {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    }
+    .changelog-dot.merged { border-color: var(--purple); background: rgba(167,139,250,0.1); }
+    .changelog-dot.merged::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
+    .changelog-dot.foundation { border-color: var(--blue); background: rgba(56,189,248,0.1); }
+    .changelog-dot.foundation::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+    .changelog-card { padding: 28px; }
+    .changelog-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .changelog-version {
+      font-family: var(--mono); font-size: 1.1rem; font-weight: 500; color: var(--text);
+    }
+    .changelog-company { font-size: 1rem; color: var(--text-muted); }
+    .changelog-role { font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+    .changelog-duration {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+    .changelog-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px; }
+    .changelog-lines { display: flex; flex-direction: column; gap: 6px; }
+    .changelog-line {
+      font-family: var(--mono); font-size: 0.8rem; display: flex; gap: 10px;
+    }
+    .changelog-line .plus { color: var(--green); flex-shrink: 0; }
+    .changelog-line .text { color: var(--text-muted); }
+
+    /* ─── SERVICE CATALOG ─── */
+    #services {}
+    .filter-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .filter-tab {
+      padding: 6px 14px; border-radius: 6px; font-family: var(--mono); font-size: 0.75rem;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
+      transition: all 0.2s; cursor: pointer;
+    }
+    .filter-tab:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+    .filter-tab.active { background: var(--green-dim); border-color: rgba(34,197,94,0.3); color: var(--green); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+    }
+    .service-card {
+      padding: 20px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .service-status {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 0.7rem; color: var(--green);
+    }
+    .service-icon { font-size: 1.5rem; }
+    .svc-glyph {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 4px;
+      padding: 4px 8px;
+    }
+    .service-name { font-weight: 600; font-size: 0.95rem; }
+    .service-desc { font-size: 0.75rem; color: var(--text-muted); }
+    .service-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+    .service-bar-track {
+      height: 4px; background: var(--surface-2); border-radius: 2px; overflow: hidden;
+    }
+    .service-bar {
+      height: 4px; background: var(--green); border-radius: 2px; width: 0;
+      transition: width 1s ease;
+    }
+    .service-bar-meta {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
+    }
+
+    /* ─── INCIDENTS ─── */
+    #incidents {}
+    .incidents-grid { display: flex; flex-direction: column; gap: 24px; }
+    .incident-card { padding: 28px; }
+    .incident-header {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .incident-id { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
+    .incident-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
+    .incident-section-label {
+      font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .incident-block { margin-bottom: 14px; }
+    .incident-text { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+    .incident-stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0; }
+    .incident-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+
+    /* ─── CONTACT ─── */
+    #contact {}
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .contact-headline {
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 700;
+      line-height: 1.25; margin-bottom: 20px;
+    }
+    .contact-headline em { font-style: normal; color: var(--green); }
+    .contact-desc { font-size: 0.9rem; color: var(--text-muted); }
+    .ticket-card { padding: 28px; }
+    .ticket-header {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted);
+      margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .ticket-row {
+      display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .ticket-row:last-of-type { border-bottom: none; }
+    .ticket-key { font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); width: 90px; flex-shrink: 0; }
+    .ticket-val { color: var(--text-muted); }
+    .channels-section { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .channels-label { font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .channel-link {
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      font-size: 0.875rem; color: var(--text-muted); transition: color 0.2s;
+    }
+    .channel-link:hover { color: var(--text); }
+    .channel-link i { width: 16px; text-align: center; color: var(--text-dim); }
+    .ticket-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--mono); font-size: 1rem; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--green); }
+    .footer-line { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px; font-family: var(--mono); }
+    .footer-stats { display: flex; justify-content: center; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+    .footer-stat { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); }
+    .footer-stat strong { color: var(--green); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .hero-inner { gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-status { display: none; }
+      .hamburger { display: flex; }
+      .hero-name { font-size: 2.4rem; }
+      .services-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .incident-id { margin-left: 0; }
+      .incident-header { flex-direction: column; align-items: flex-start; }
+      .changelog-entry { padding-left: 24px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero-buttons { flex-direction: column; }
+      .btn { justify-content: center; }
+      .ticket-actions { flex-direction: column; }
+    }
+
+    /* ─── Scroll animations ─── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+<canvas id="bgCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.18;"></canvas>
+
+  <!-- ═══════════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════════ -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">anjali.sh<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="#changelog">CHANGELOG</a>
+        <a href="#services">SERVICES</a>
+        <a href="#incidents">INCIDENTS</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+      <div class="nav-status">
+        <span class="dot-green"></span>
+        All Systems Operational
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#changelog" class="mobile-nav-link">CHANGELOG</a>
+    <a href="#services" class="mobile-nav-link">SERVICES</a>
+    <a href="#incidents" class="mobile-nav-link">INCIDENTS</a>
+    <a href="#contact" class="mobile-nav-link">CONTACT</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Left -->
+        <div style="animation: fadeInUp 0.6s ease both;">
+          <div class="hero-role"># cloud-devsecops-engineer</div>
+          <h1 class="hero-name">Anjali Gambhava</h1>
+          <p class="hero-tagline">I keep things running.<br>And running fast.</p>
+          <p class="hero-sub">Cloud &amp; DevSecOps Engineer · 2.5 yrs · GCP · Kubernetes · SOC 2</p>
+          <div class="hero-buttons">
+            <a href="#changelog" class="btn btn-primary">View Changelog <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i></a>
+            <a href="#contact" class="btn btn-outline">Open a Ticket</a>
+          </div>
+          <div class="hero-meta">
+            <span class="up-arrow">⬆</span>
+            <span>99.9% uptime · Deployed Nov 2024</span>
+          </div>
+          <div class="uptime-counter">Uptime: <span id="uptimeDisplay">calculating...</span></div>
+        </div>
+
+        <!-- Right: Status Card -->
+        <div class="status-card">
+          <div class="status-card-header">
+            <div class="macos-dot md-red"></div>
+            <div class="macos-dot md-amber"></div>
+            <div class="macos-dot md-green"></div>
+            <span class="status-card-title">SYSTEM STATUS</span>
+          </div>
+          <div class="status-card-body">
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span>Cloud Infrastructure</div>
+              <div class="status-row-right">Operational</div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span>CI/CD Pipelines</div>
+              <div class="status-row-right">Operational</div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span>Security &amp; Compliance</div>
+              <div class="status-row-right">Operational</div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span>Container Orchestration</div>
+              <div class="status-row-right">Operational</div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span>Infrastructure as Code</div>
+              <div class="status-row-right">Operational</div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left"><span class="dot-green"></span><span style="color:var(--green);font-weight:500;">Open to Work</span></div>
+              <div class="status-row-right" style="color:var(--green);">Operational ✓</div>
+            </div>
+          </div>
+          <div class="status-footer">
+            <span>Last incident: Never</span>
+            <span>Uptime this quarter: <strong style="color:var(--green);">100%</strong></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       METRICS STRIP
+  ═══════════════════════════════════════════════ -->
+  <div id="metrics">
+    <div class="metrics-track" id="metricsTrack">
+      <div class="metric-item"><span class="metric-number">20+</span><span class="metric-label">GCP Services Managed</span></div>
+      <div class="metric-item"><span class="metric-number">99.9%</span><span class="metric-label">Production Uptime</span></div>
+      <div class="metric-item"><span class="metric-number">SOC 2</span><span class="metric-label">Type II Compliant</span></div>
+      <div class="metric-item"><span class="metric-number">0</span><span class="metric-label">Credential Leaks (WIF)</span></div>
+      <div class="metric-item"><span class="metric-number">3</span><span class="metric-label">Public OSS Projects</span></div>
+      <div class="metric-item"><span class="metric-number">2.5</span><span class="metric-label">Years in Prod</span></div>
+      <div class="metric-item"><span class="metric-number">30+</span><span class="metric-label">AICPA Controls</span></div>
+      <div class="metric-item"><span class="metric-number">0</span><span class="metric-label">Rollbacks</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="metric-item"><span class="metric-number">20+</span><span class="metric-label">GCP Services Managed</span></div>
+      <div class="metric-item"><span class="metric-number">99.9%</span><span class="metric-label">Production Uptime</span></div>
+      <div class="metric-item"><span class="metric-number">SOC 2</span><span class="metric-label">Type II Compliant</span></div>
+      <div class="metric-item"><span class="metric-number">0</span><span class="metric-label">Credential Leaks (WIF)</span></div>
+      <div class="metric-item"><span class="metric-number">3</span><span class="metric-label">Public OSS Projects</span></div>
+      <div class="metric-item"><span class="metric-number">2.5</span><span class="metric-label">Years in Prod</span></div>
+      <div class="metric-item"><span class="metric-number">30+</span><span class="metric-label">AICPA Controls</span></div>
+      <div class="metric-item"><span class="metric-number">0</span><span class="metric-label">Rollbacks</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       CHANGELOG
+  ═══════════════════════════════════════════════ -->
+  <section id="changelog">
+    <div class="container">
+      <p class="section-header">// experience</p>
+      <h2 class="section-title"><span class="hash">#</span>deployment-history</h2>
+      <p class="section-subtitle">Every version shipped to production. No rollbacks.</p>
+
+      <!-- v2.0.0 -->
+      <div class="changelog-entry reveal">
+        <div class="changelog-dot active"></div>
+        <div class="card changelog-card">
+          <div class="changelog-meta">
+            <span class="changelog-version">v2.0.0</span>
+            <span class="changelog-company">— zeeproc</span>
+            <span class="pill pill-green"><span class="dot-green" style="width:6px;height:6px;"></span>HEAD → production</span>
+          </div>
+          <div class="changelog-role">Cloud &amp; DevSecOps Engineer</div>
+          <div class="changelog-duration">Nov 2024 — Present · 1y 0m</div>
+          <p class="changelog-desc">Sole infrastructure owner for 20+ GCP production services serving live B2B SaaS clients. End-to-end ownership: cloud architecture, CI/CD, security, compliance, and observability.</p>
+          <div class="changelog-lines">
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Built GitHub Actions CI/CD with Workload Identity Federation (zero service account keys)</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Provisioned Global HTTPS LB, Cloud Armor WAF, Serverless NEGs via Terraform</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Achieved SOC 2 Type II readiness — 30+ AICPA controls documented and evidenced</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Implemented Trivy SARIF scanning gate in every pipeline</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Zero-downtime rollback strategy with Cloud Run revision traffic splitting</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Serverless VPC private egress — Cloud SQL never exposed to public internet</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v1.0.0 -->
+      <div class="changelog-entry reveal">
+        <div class="changelog-dot merged"></div>
+        <div class="card changelog-card">
+          <div class="changelog-meta">
+            <span class="changelog-version">v1.0.0</span>
+            <span class="changelog-company">— VMukti Solutions</span>
+            <span class="pill pill-purple">internship · merged</span>
+          </div>
+          <div class="changelog-role">DevOps Intern</div>
+          <div class="changelog-duration">Dec 2023 — Jun 2024 · 7m</div>
+          <p class="changelog-desc">Hands-on DevOps internship working with Azure cloud infrastructure, Kubernetes, and CI/CD pipelines for a network management system product.</p>
+          <div class="changelog-lines">
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Deployed and managed NMS system on Azure Kubernetes Service (AKS)</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Built CI/CD pipelines for .NET applications using GitHub Actions</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Managed Azure Storage Accounts and CDN for static asset delivery</span></div>
+            <div class="changelog-line"><span class="plus">+</span><span class="text">Implemented Azure Functions for microservice event handling</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v0.1.0 -->
+      <div class="changelog-entry reveal">
+        <div class="changelog-dot foundation"></div>
+        <div class="card changelog-card">
+          <div class="changelog-meta">
+            <span class="changelog-version">v0.1.0</span>
+            <span class="changelog-company">— Education</span>
+            <span class="pill pill-blue">foundation</span>
+          </div>
+          <div class="changelog-role">B.Tech Computer Science Engineering</div>
+          <div class="changelog-duration">2020 — 2024 · 4y</div>
+          <p class="changelog-desc">Adani Institute of Infrastructure Engineering, Ahmedabad</p>
+          <div class="changelog-lines">
+            <div class="changelog-line"><span class="plus" style="color:var(--blue);">+</span><span class="text">Specialized in distributed systems, networking &amp; cloud computing</span></div>
+            <div class="changelog-line"><span class="plus" style="color:var(--blue);">+</span><span class="text">Foundation in computer networks, operating systems &amp; software architecture</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SERVICE CATALOG
+  ═══════════════════════════════════════════════ -->
+  <section id="services">
+    <div class="container">
+      <p class="section-header">// skills</p>
+      <h2 class="section-title"><span class="hash">#</span>service-catalog</h2>
+      <p class="section-subtitle">Integrations currently active in production.</p>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="cloud">Cloud</button>
+        <button class="filter-tab" data-filter="iac">IaC</button>
+        <button class="filter-tab" data-filter="containers">Containers</button>
+        <button class="filter-tab" data-filter="cicd">CI/CD</button>
+        <button class="filter-tab" data-filter="security">Security</button>
+        <button class="filter-tab" data-filter="observability">Observability</button>
+        <button class="filter-tab" data-filter="languages">Languages</button>
+      </div>
+
+      <div class="services-grid" id="servicesGrid">
+
+        <!-- Cloud -->
+        <div class="card service-card reveal" data-category="cloud">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">GCP</span></div>
+          <div>
+            <div class="service-name">GCP</div>
+            <div class="service-desc">Google Cloud Platform</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="92"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="cloud">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.2s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">AZ</span></div>
+          <div>
+            <div class="service-name">Azure</div>
+            <div class="service-desc">Microsoft Azure</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="65"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1yr</span></div>
+          </div>
+        </div>
+
+        <!-- IaC -->
+        <div class="card service-card reveal" data-category="iac">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.4s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">TF</span></div>
+          <div>
+            <div class="service-name">Terraform</div>
+            <div class="service-desc">Infrastructure as Code</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="72"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1.5yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="iac languages">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.1s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">SH</span></div>
+          <div>
+            <div class="service-name">Bash</div>
+            <div class="service-desc">Shell Scripting</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="88"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <!-- Containers -->
+        <div class="card service-card reveal" data-category="containers">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.3s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">DKR</span></div>
+          <div>
+            <div class="service-name">Docker</div>
+            <div class="service-desc">Container Runtime</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="90"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="containers">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.5s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">K8S</span></div>
+          <div>
+            <div class="service-name">Kubernetes</div>
+            <div class="service-desc">Container Orchestration</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="68"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="containers">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.1s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">HLM</span></div>
+          <div>
+            <div class="service-name">Helm</div>
+            <div class="service-desc">Kubernetes Packages</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="40"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Beginner · 6mo</span></div>
+          </div>
+        </div>
+
+        <!-- CI/CD -->
+        <div class="card service-card reveal" data-category="cicd">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.2s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">GHA</span></div>
+          <div>
+            <div class="service-name">GitHub Actions</div>
+            <div class="service-desc">CI/CD Automation</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="92"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="cicd">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.4s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">ADO</span></div>
+          <div>
+            <div class="service-name">Azure DevOps</div>
+            <div class="service-desc">Microsoft DevOps</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="60"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 6mo</span></div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="card service-card reveal" data-category="security">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">WAF</span></div>
+          <div>
+            <div class="service-name">Cloud Armor</div>
+            <div class="service-desc">WAF &amp; DDoS Protection</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="70"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="security">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.3s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">WIF</span></div>
+          <div>
+            <div class="service-name">WIF / OIDC</div>
+            <div class="service-desc">Workload Identity Federation</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="75"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="security">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.5s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">SOC</span></div>
+          <div>
+            <div class="service-name">SOC 2</div>
+            <div class="service-desc">Security Compliance</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="78"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 1yr</span></div>
+          </div>
+        </div>
+
+        <!-- Observability -->
+        <div class="card service-card reveal" data-category="observability">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.1s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">MON</span></div>
+          <div>
+            <div class="service-name">Cloud Monitoring</div>
+            <div class="service-desc">GCP Monitoring</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="85"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="observability">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.3s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">GRF</span></div>
+          <div>
+            <div class="service-name">Grafana</div>
+            <div class="service-desc">Dashboards &amp; Alerts</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="45"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Beginner · 6mo</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="observability">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">LOG</span></div>
+          <div>
+            <div class="service-name">Cloud Logging</div>
+            <div class="service-desc">Centralized Log Management</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="88"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="card service-card reveal" data-category="languages">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.2s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">PY</span></div>
+          <div>
+            <div class="service-name">Python</div>
+            <div class="service-desc">Scripting &amp; Automation</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="68"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Intermediate · 2yr</span></div>
+          </div>
+        </div>
+
+        <div class="card service-card reveal" data-category="languages">
+          <div class="service-status"><span class="dot-green" style="width:6px;height:6px;animation-delay:0.4s;"></span>Operational</div>
+          <div class="service-icon"><span class="svc-glyph">LNX</span></div>
+          <div>
+            <div class="service-name">Linux</div>
+            <div class="service-desc">Systems &amp; Administration</div>
+          </div>
+          <div class="service-bar-wrap">
+            <div class="service-bar-track"><div class="service-bar" data-width="88"></div></div>
+            <div class="service-bar-meta"><span>Proficiency</span><span>Advanced · 2yr</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       INCIDENTS RESOLVED
+  ═══════════════════════════════════════════════ -->
+  <section id="incidents">
+    <div class="container">
+      <p class="section-header">// projects</p>
+      <h2 class="section-title"><span class="hash">#</span>incidents-resolved</h2>
+      <p class="section-subtitle">Real problems. Real solutions. All resolved.</p>
+
+      <div class="incidents-grid">
+
+        <!-- INC-001 -->
+        <div class="card incident-card reveal">
+          <div class="incident-header">
+            <span class="pill pill-green"><span class="dot-green" style="width:6px;height:6px;"></span>RESOLVED</span>
+            <span class="pill pill-amber">P0</span>
+            <span class="pill pill-blue">Security</span>
+            <span class="incident-id mono">#INC-001</span>
+          </div>
+          <div class="incident-title">Zero-Trust GCP Deployer</div>
+          <div class="incident-block">
+            <div class="incident-section-label">Problem</div>
+            <p class="incident-text">CI/CD pipelines required long-lived service account keys stored in GitHub Secrets — a credential leak risk in every single pipeline run. One compromised secret = full GCP access.</p>
+          </div>
+          <div class="incident-block">
+            <div class="incident-section-label">Resolution</div>
+            <p class="incident-text">Built a reusable hub-and-spoke GitHub Actions engine using Workload Identity Federation (OIDC). Zero keys. Short-lived tokens. Trivy SARIF scan gate blocks vulnerable images before they reach Cloud Run. IAP-protected endpoints with zero public SA exposure.</p>
+          </div>
+          <div class="incident-stack">
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">GCP WIF</span>
+            <span class="tag">Cloud Run</span>
+            <span class="tag">Trivy</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">IAP</span>
+          </div>
+          <div class="incident-actions">
+            <a href="https://github.com/anjali-gambhava/zero-trust-gcp-deployer" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
+              <i class="fab fa-github"></i> GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- INC-002 -->
+        <div class="card incident-card reveal">
+          <div class="incident-header">
+            <span class="pill pill-green"><span class="dot-green" style="width:6px;height:6px;"></span>RESOLVED</span>
+            <span class="pill pill-amber">P1</span>
+            <span class="pill pill-purple">Engineering Velocity</span>
+            <span class="incident-id mono">#INC-002</span>
+          </div>
+          <div class="incident-title">PR Governance Engine</div>
+          <div class="incident-block">
+            <div class="incident-section-label">Problem</div>
+            <p class="incident-text">Unreviewed, unchecked code merging to main — a compliance and quality risk. No enforced review requirements, no CI gates, no PR size limits. Chaos at scale.</p>
+          </div>
+          <div class="incident-block">
+            <div class="incident-section-label">Resolution</div>
+            <p class="incident-text">Built a reusable GitHub Actions workflow enforcing mandatory code reviews, CI pass requirements, branch protection policies, and PR size limits. Plug-and-play for any repository in the org.</p>
+          </div>
+          <div class="incident-stack">
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">YAML</span>
+            <span class="tag">Branch Protection</span>
+            <span class="tag">Reusable Workflows</span>
+          </div>
+          <div class="incident-actions">
+            <a href="https://github.com/anjali-gambhava/pr-governance-engine" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
+              <i class="fab fa-github"></i> GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- INC-003 -->
+        <div class="card incident-card reveal">
+          <div class="incident-header">
+            <span class="pill pill-green"><span class="dot-green" style="width:6px;height:6px;"></span>RESOLVED</span>
+            <span class="pill pill-amber">P2</span>
+            <span class="pill pill-blue">Observability</span>
+            <span class="incident-id mono">#INC-003</span>
+          </div>
+          <div class="incident-title">NetVision — Network Traffic Analyzer</div>
+          <div class="incident-block">
+            <div class="incident-section-label">Problem</div>
+            <p class="incident-text">Zero visibility into live network packet flow — debugging was completely blind. No real-time inspection, no filtering, no anomaly detection. Network issues went undetected until they became outages.</p>
+          </div>
+          <div class="incident-block">
+            <div class="incident-section-label">Resolution</div>
+            <p class="incident-text">Built a real-time network analysis and visualization tool with deep packet inspection, protocol filtering, traffic pattern analysis, and anomaly detection. Containerized and CI/CD'd for easy deployment.</p>
+          </div>
+          <div class="incident-stack">
+            <span class="tag">Python</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Packet Capture</span>
+            <span class="tag">CI/CD</span>
+          </div>
+          <div class="incident-actions">
+            <a href="https://github.com/anjali-gambhava/NetVision" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
+              <i class="fab fa-github"></i> GitHub ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-header">// contact</p>
+      <h2 class="section-title"><span class="hash">#</span>on-call-channels</h2>
+      <p class="section-subtitle">Response time: &lt; 24 hours. SLA: Guaranteed.</p>
+
+      <div class="contact-inner">
+        <!-- Left -->
+        <div class="reveal">
+          <h3 class="contact-headline">
+            Let's build something<br>
+            that doesn't <em>page anyone</em><br>
+            at 3am.
+          </h3>
+          <p class="contact-desc">
+            I'm currently open to full-time roles in Cloud Engineering, DevSecOps, and Platform Engineering. If you're building something that needs to be reliable, secure, and scalable — let's talk.
+          </p>
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px;">
+            <div class="hero-meta" style="margin:0;">
+              <span class="dot-green"></span>
+              <span style="font-family:var(--mono);font-size:0.78rem;color:var(--text-muted);">Available for opportunities · Remote preferred · Jamnagar, Gujarat</span>
+            </div>
+            <div style="font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);">
+              Current status: <span style="color:var(--green);">● Online</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Ticket Card -->
+        <div class="card ticket-card reveal">
+          <div class="ticket-header">── NEW TICKET ────────────────────────</div>
+          <div class="ticket-row">
+            <span class="ticket-key">Priority:</span>
+            <span class="ticket-val"><span class="pill pill-green" style="font-size:0.68rem;padding:2px 8px;"><span class="dot-green" style="width:5px;height:5px;"></span>HIGH — Looking to hire</span></span>
+          </div>
+          <div class="ticket-row">
+            <span class="ticket-key">Assignee:</span>
+            <span class="ticket-val" style="color:var(--text);">Anjali Gambhava</span>
+          </div>
+          <div class="ticket-row">
+            <span class="ticket-key">Status:</span>
+            <span class="ticket-val" style="color:var(--green);">Open to opportunities</span>
+          </div>
+          <div class="ticket-row">
+            <span class="ticket-key">Location:</span>
+            <span class="ticket-val">Jamnagar, Gujarat · Remote ✓</span>
+          </div>
+          <div class="channels-section">
+            <div class="channels-label">Channels</div>
+            <a href="mailto:anjaligambhava@gmail.com" class="channel-link">
+              <i class="fas fa-envelope"></i>
+              anjaligambhava@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/anjali-gambhava-88b61822b/" target="_blank" rel="noopener" class="channel-link">
+              <i class="fab fa-linkedin"></i>
+              linkedin.com/in/anjali-gambhava
+            </a>
+            <a href="https://github.com/anjali-gambhava" target="_blank" rel="noopener" class="channel-link">
+              <i class="fab fa-github"></i>
+              github.com/anjali-gambhava
+            </a>
+          </div>
+          <div class="ticket-actions">
+            <button class="btn btn-outline" id="copyEmailBtn" style="font-size:0.8rem;padding:8px 16px;flex:1;justify-content:center;">
+              <i class="fas fa-copy"></i> <span id="copyBtnText">Copy Email</span>
+            </button>
+            <a href="https://www.linkedin.com/in/anjali-gambhava-88b61822b/" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:0.8rem;padding:8px 16px;flex:1;justify-content:center;">
+              Connect on LinkedIn →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo"><span>anjali</span>.sh · Cloud &amp; DevSecOps Engineer · Jamnagar, India</div>
+      <div class="footer-line">Built with HTML, CSS &amp; 2.5 years of production experience.</div>
+      <div class="footer-stats">
+        <span class="footer-stat">Incidents resolved: <strong>3</strong></span>
+        <span class="footer-stat">Services running: <strong>100%</strong></span>
+        <span class="footer-stat">Uptime: <strong>99.9%</strong></span>
+        <span class="footer-stat">Rollbacks: <strong>0</strong></span>
+      </div>
+      <div style="margin-top:24px;font-family:var(--mono);font-size:0.68rem;color:var(--text-dim);">
+        © 2025 Anjali Gambhava · All systems operational
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════════ -->
+  <script>
+    // ── 1. NAV: sticky + backdrop blur on scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // ── 2. HAMBURGER menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ── 3. LIVE UPTIME COUNTER ──
+    // Start date: Nov 1, 2024 00:00:00 IST (UTC+5:30 = UTC 2024-10-31T18:30:00Z)
+    const startDate = new Date('2024-10-31T18:30:00Z');
+    function updateUptime() {
+      const now = new Date();
+      let diff = Math.floor((now - startDate) / 1000); // seconds
+      if (diff < 0) diff = 0;
+      const years   = Math.floor(diff / (365.25 * 24 * 3600));
+      diff -= years * Math.floor(365.25 * 24 * 3600);
+      const days    = Math.floor(diff / (24 * 3600));
+      diff -= days * 24 * 3600;
+      const hours   = Math.floor(diff / 3600);
+      diff -= hours * 3600;
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+      const pad = n => String(n).padStart(2, '0');
+      let display = '';
+      if (years > 0) display += `${years}y `;
+      display += `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+      document.getElementById('uptimeDisplay').textContent = display;
+    }
+    updateUptime();
+    setInterval(updateUptime, 1000);
+
+    // ── 4. FILTER TABS for Service Catalog ──
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const serviceCards = document.querySelectorAll('.service-card');
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        serviceCards.forEach(card => {
+          const cats = card.dataset.category || '';
+          if (filter === 'all' || cats.split(' ').includes(filter)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // ── 5. INTERSECTION OBSERVER: reveal + skill bars ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const barsAnimated = new Set();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // animate skill bars inside this element
+          entry.target.querySelectorAll('.service-bar[data-width]').forEach(bar => {
+            if (!barsAnimated.has(bar)) {
+              barsAnimated.add(bar);
+              const targetWidth = bar.dataset.width + '%';
+              setTimeout(() => { bar.style.width = targetWidth; }, 100);
+            }
+          });
+          // also trigger if the whole grid becomes visible
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── 6. COPY EMAIL button ──
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const copyBtnText = document.getElementById('copyBtnText');
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('anjaligambhava@gmail.com').then(() => {
+        copyBtnText.textContent = 'Copied!';
+        copyBtn.style.borderColor = 'rgba(34,197,94,0.4)';
+        copyBtn.style.color = 'var(--green)';
+        setTimeout(() => {
+          copyBtnText.textContent = 'Copy Email';
+          copyBtn.style.borderColor = '';
+          copyBtn.style.color = '';
+        }, 2000);
+      }).catch(() => {
+        // fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = 'anjaligambhava@gmail.com';
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        copyBtnText.textContent = 'Copied!';
+        setTimeout(() => { copyBtnText.textContent = 'Copy Email'; }, 2000);
+      });
+    });
+
+    // ── 7. SMOOTH SCROLL polyfill for anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 72; // nav height
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ── 8. Stagger reveal delays ──
+    document.querySelectorAll('.services-grid .reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.04) + 's';
+    });
+  </script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('bgCanvas');
+  var ctx = canvas.getContext('2d');
+  var W, H, cols, rows, cellSize = 40;
+  var nodes = [];
+  var lines = [];
+  var pulses = [];
+  var GREEN = '#22c55e';
+  var DIM = 'rgba(34,197,94,0.15)';
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cols = Math.ceil(W / cellSize) + 1;
+    rows = Math.ceil(H / cellSize) + 1;
+    buildGrid();
+  }
+
+  function buildGrid(){
+    nodes = [];
+    for(var r=0;r<rows;r++){
+      for(var c=0;c<cols;c++){
+        nodes.push({x: c*cellSize, y: r*cellSize, r: c, col: r});
+      }
+    }
+  }
+
+  function spawnLine(){
+    // random horizontal or vertical line segment
+    var horiz = Math.random() > 0.5;
+    var c = Math.floor(Math.random()*(cols-4));
+    var r = Math.floor(Math.random()*(rows-4));
+    var len = 3 + Math.floor(Math.random()*8);
+    lines.push({
+      horiz: horiz,
+      c: c, r: r, len: len,
+      progress: 0,
+      speed: 0.03 + Math.random()*0.04,
+      alpha: 0,
+      fade: 0,
+      life: 0
+    });
+  }
+
+  function spawnPulse(){
+    var horiz = Math.random() > 0.5;
+    var c = Math.floor(Math.random()*(cols-2));
+    var r = Math.floor(Math.random()*(rows-2));
+    var dir = horiz ? (Math.random()>0.5 ? 1 : -1) : (Math.random()>0.5 ? 1 : -1);
+    var len = 3 + Math.floor(Math.random()*6);
+    pulses.push({
+      horiz: horiz,
+      c: c, r: r,
+      dir: dir, len: len,
+      pos: 0,
+      speed: 0.08 + Math.random()*0.12,
+      alpha: 1
+    });
+  }
+
+  var frameCount = 0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // Draw faint grid dots
+    ctx.fillStyle = 'rgba(34,197,94,0.25)';
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i];
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 1, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // Draw grid lines (very faint)
+    ctx.strokeStyle = 'rgba(34,197,94,0.04)';
+    ctx.lineWidth = 1;
+    for(var c=0;c<cols;c++){
+      ctx.beginPath();
+      ctx.moveTo(c*cellSize, 0);
+      ctx.lineTo(c*cellSize, H);
+      ctx.stroke();
+    }
+    for(var r=0;r<rows;r++){
+      ctx.beginPath();
+      ctx.moveTo(0, r*cellSize);
+      ctx.lineTo(W, r*cellSize);
+      ctx.stroke();
+    }
+
+    // Update & draw glowing lines
+    for(var i=lines.length-1;i>=0;i--){
+      var l = lines[i];
+      l.life += 0.016;
+      if(l.life < 0.3) l.alpha = l.life / 0.3;
+      else if(l.life > 1.2) l.alpha = Math.max(0, 1 - (l.life - 1.2)/0.4);
+      if(l.life > 1.6){ lines.splice(i,1); continue; }
+
+      var x1 = l.c * cellSize;
+      var y1 = l.r * cellSize;
+      var x2 = l.horiz ? (l.c + l.len) * cellSize : x1;
+      var y2 = l.horiz ? y1 : (l.r + l.len) * cellSize;
+
+      ctx.save();
+      ctx.globalAlpha = l.alpha * 0.5;
+      ctx.strokeStyle = GREEN;
+      ctx.lineWidth = 1;
+      ctx.shadowColor = GREEN;
+      ctx.shadowBlur = 4;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // Draw & update pulse dots
+    for(var i=pulses.length-1;i>=0;i--){
+      var p = pulses[i];
+      p.pos += p.speed;
+      p.alpha = Math.max(0, 1 - p.pos / (p.len + 2));
+      if(p.alpha <= 0){ pulses.splice(i,1); continue; }
+
+      var px, py;
+      if(p.horiz){
+        px = (p.c + p.pos * p.dir) * cellSize;
+        py = p.r * cellSize;
+      } else {
+        px = p.c * cellSize;
+        py = (p.r + p.pos * p.dir) * cellSize;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha * 0.9;
+      // Tail
+      var grad = ctx.createRadialGradient(px, py, 0, px, py, 10);
+      grad.addColorStop(0, 'rgba(34,197,94,0.9)');
+      grad.addColorStop(1, 'rgba(34,197,94,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(px, py, 10, 0, Math.PI*2);
+      ctx.fill();
+      // Bright head
+      ctx.fillStyle = '#7fffd4';
+      ctx.shadowColor = '#7fffd4';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(px, py, 2.5, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Randomly spawn
+    frameCount++;
+    if(frameCount % 40 === 0) spawnLine();
+    if(frameCount % 18 === 0) spawnPulse();
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  // Pre-seed
+  for(var i=0;i<6;i++) spawnLine();
+  for(var i=0;i<4;i++) spawnPulse();
+  draw();
+
+  // Make all sections sit above canvas
+  document.querySelectorAll('nav, section, #metrics, footer').forEach(function(el){
+    el.style.position = 'relative';
+    el.style.zIndex = '1';
+  });
+})();
+</script>
+</body>
+</html>
+
