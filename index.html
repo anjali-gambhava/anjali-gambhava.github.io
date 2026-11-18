@@ -389,6 +389,49 @@
       font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
     }
 
+
+    /* ─── ARCHITECTURE DIAGRAMS ─── */
+    .arch-toggle {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted);
+      background: var(--surface-2); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 6px; cursor: pointer;
+      transition: all 0.2s; margin-left: auto;
+    }
+    .arch-toggle:hover { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .arch-toggle .arch-icon { font-size: 0.65rem; transition: transform 0.3s; }
+    .arch-toggle.open .arch-icon { transform: rotate(180deg); }
+    .arch-panel {
+      display: none; margin-top: 20px;
+      border-top: 1px solid var(--border); padding-top: 20px;
+    }
+    .arch-panel.open { display: block; }
+    .arch-label {
+      font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
+    }
+    .arch-svg-wrap {
+      width: 100%; overflow-x: auto;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(34,197,94,0.08);
+      padding: 20px 10px;
+    }
+    /* SVG node styling */
+    .arch-node-box {
+      fill: #0c111d; stroke: rgba(34,197,94,0.35); stroke-width: 1.5;
+      rx: 8; ry: 8;
+    }
+    .arch-node-box.highlight { stroke: #22c55e; stroke-width: 2; }
+    .arch-node-box.amber-node { stroke: rgba(245,158,11,0.5); }
+    .arch-node-box.blue-node { stroke: rgba(56,189,248,0.4); }
+    .arch-node-box.red-node { stroke: rgba(239,68,68,0.5); }
+    .arch-node-label { fill: #f1f5f9; font-family: JetBrains Mono, monospace; font-size: 11px; font-weight: 500; }
+    .arch-node-sub { fill: #64748b; font-family: JetBrains Mono, monospace; font-size: 9px; }
+    .arch-path { fill: none; stroke: rgba(34,197,94,0.2); stroke-width: 1.5; }
+    .arch-path.amber-path { stroke: rgba(245,158,11,0.2); }
+    .arch-path.blue-path { stroke: rgba(56,189,248,0.2); }
+    .arch-arrow { fill: rgba(34,197,94,0.4); }
     /* ─── INCIDENTS ─── */
     #incidents {}
     .incidents-grid { display: flex; flex-direction: column; gap: 24px; }
@@ -975,10 +1018,86 @@
             <span class="tag">IAP</span>
           </div>
           <div class="incident-actions">
+            <button class="arch-toggle" onclick="toggleArch(1,this)"><span>⬡</span> Architecture <span class="arch-icon">▾</span></button>
             <a href="https://github.com/anjali-gambhava/zero-trust-gcp-deployer" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
-          </div>
+          <div class="arch-panel" id="arch-panel-1">
+  <div class="arch-label">// live architecture · zero-trust deploy flow</div>
+  <div class="arch-svg-wrap">
+    <svg id="arch-svg-1" viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;height:auto;display:block;">
+      <defs>
+        <filter id="glow1"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <marker id="arr1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" class="arch-arrow"/></marker>
+        <marker id="arr1b" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(56,189,248,0.6)"/></marker>
+        <marker id="arr1c" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(245,158,11,0.6)"/></marker>
+      </defs>
+      <!-- Nodes -->
+      <!-- 1: Git Push -->
+      <rect x="10" y="65" width="100" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="60" y="86" class="arch-node-label" text-anchor="middle">git push</text>
+      <text x="60" y="101" class="arch-node-sub" text-anchor="middle">Developer</text>
+      <text x="60" y="112" class="arch-node-sub" text-anchor="middle">↑ feature/xyz</text>
+      <!-- 2: GHA Trigger -->
+      <rect x="140" y="65" width="110" height="50" rx="8" class="arch-node-box"/>
+      <text x="195" y="86" class="arch-node-label" text-anchor="middle">GH Actions</text>
+      <text x="195" y="101" class="arch-node-sub" text-anchor="middle">workflow triggered</text>
+      <text x="195" y="112" class="arch-node-sub" text-anchor="middle">on: push/PR</text>
+      <!-- 3: WIF Token Exchange -->
+      <rect x="280" y="65" width="120" height="50" rx="8" class="arch-node-box highlight"/>
+      <text x="340" y="86" class="arch-node-label" text-anchor="middle" fill="#22c55e">WIF / OIDC</text>
+      <text x="340" y="101" class="arch-node-sub" text-anchor="middle">JWT → GCP Token</text>
+      <text x="340" y="112" class="arch-node-sub" text-anchor="middle">zero SA keys ✓</text>
+      <!-- 4: Trivy Scan -->
+      <rect x="430" y="20" width="110" height="50" rx="8" class="arch-node-box amber-node"/>
+      <text x="485" y="41" class="arch-node-label" text-anchor="middle" fill="#f59e0b">Trivy Scan</text>
+      <text x="485" y="56" class="arch-node-sub" text-anchor="middle">CVE check</text>
+      <text x="485" y="67" class="arch-node-sub" text-anchor="middle">HIGH/CRIT → ✗</text>
+      <!-- 5: Artifact Registry -->
+      <rect x="430" y="110" width="110" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="485" y="131" class="arch-node-label" text-anchor="middle">Artifact Reg</text>
+      <text x="485" y="146" class="arch-node-sub" text-anchor="middle">image:sha-abc123</text>
+      <text x="485" y="157" class="arch-node-sub" text-anchor="middle">never :latest</text>
+      <!-- 6: Cloud Run -->
+      <rect x="580" y="65" width="110" height="50" rx="8" class="arch-node-box highlight"/>
+      <text x="635" y="86" class="arch-node-label" text-anchor="middle" fill="#22c55e">Cloud Run</text>
+      <text x="635" y="101" class="arch-node-sub" text-anchor="middle">zero-downtime</text>
+      <text x="635" y="112" class="arch-node-sub" text-anchor="middle">rolling deploy ✓</text>
+      <!-- 7: IAP -->
+      <rect x="720" y="65" width="90" height="50" rx="8" class="arch-node-box highlight"/>
+      <text x="765" y="86" class="arch-node-label" text-anchor="middle" fill="#22c55e">IAP</text>
+      <text x="765" y="101" class="arch-node-sub" text-anchor="middle">Identity Aware</text>
+      <text x="765" y="112" class="arch-node-sub" text-anchor="middle">Proxy ✓</text>
+      <!-- Paths -->
+      <path id="p1a" d="M110,90 L140,90" class="arch-path blue-path" marker-end="url(#arr1b)"/>
+      <path id="p1b" d="M250,90 L280,90" class="arch-path" marker-end="url(#arr1)"/>
+      <path id="p1c" d="M400,80 L430,45" class="arch-path amber-path" marker-end="url(#arr1c)"/>
+      <path id="p1d" d="M400,100 L430,135" class="arch-path blue-path" marker-end="url(#arr1b)"/>
+      <path id="p1e" d="M540,135 Q560,135 560,90 L580,90" class="arch-path" marker-end="url(#arr1)"/>
+      <path id="p1f" d="M690,90 L720,90" class="arch-path" marker-end="url(#arr1)"/>
+      <!-- Animated packets -->
+      <circle r="4" fill="#38bdf8" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="2s" repeatCount="indefinite" begin="0s"><mpath href="#p1a"/></animateMotion>
+      </circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="2s" repeatCount="indefinite" begin="0.5s"><mpath href="#p1b"/></animateMotion>
+      </circle>
+      <circle r="3.5" fill="#f59e0b" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="1s"><mpath href="#p1c"/></animateMotion>
+      </circle>
+      <circle r="3.5" fill="#38bdf8" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.3s"><mpath href="#p1d"/></animateMotion>
+      </circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.8s"><mpath href="#p1e"/></animateMotion>
+      </circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow1)" opacity="0.9">
+        <animateMotion dur="1.5s" repeatCount="indefinite" begin="0.2s"><mpath href="#p1f"/></animateMotion>
+      </circle>
+    </svg>
+  </div>
+</div>
+</div>
         </div>
 
         <!-- INC-002 -->
@@ -1005,10 +1124,75 @@
             <span class="tag">Reusable Workflows</span>
           </div>
           <div class="incident-actions">
+            <button class="arch-toggle" onclick="toggleArch(2,this)"><span>⬡</span> Architecture <span class="arch-icon">▾</span></button>
             <a href="https://github.com/anjali-gambhava/pr-governance-engine" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
-          </div>
+          <div class="arch-panel" id="arch-panel-2">
+  <div class="arch-label">// live architecture · PR governance flow</div>
+  <div class="arch-svg-wrap">
+    <svg id="arch-svg-2" viewBox="0 0 820 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;height:auto;display:block;">
+      <defs>
+        <filter id="glow2"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" class="arch-arrow"/></marker>
+        <marker id="arr2r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(239,68,68,0.7)"/></marker>
+        <marker id="arr2g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(34,197,94,0.8)"/></marker>
+      </defs>
+      <!-- Nodes -->
+      <rect x="10" y="55" width="100" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="60" y="76" class="arch-node-label" text-anchor="middle">PR Opened</text>
+      <text x="60" y="91" class="arch-node-sub" text-anchor="middle">feature → main</text>
+      <text x="60" y="102" class="arch-node-sub" text-anchor="middle">+320 / -45 lines</text>
+
+      <rect x="140" y="55" width="105" height="50" rx="8" class="arch-node-box"/>
+      <text x="192" y="76" class="arch-node-label" text-anchor="middle">Lint + Tests</text>
+      <text x="192" y="91" class="arch-node-sub" text-anchor="middle">flake8 / pytest</text>
+      <text x="192" y="102" class="arch-node-sub" text-anchor="middle">must pass ✓</text>
+
+      <rect x="275" y="55" width="110" height="50" rx="8" class="arch-node-box amber-node"/>
+      <text x="330" y="76" class="arch-node-label" text-anchor="middle" fill="#f59e0b">Security Scan</text>
+      <text x="330" y="91" class="arch-node-sub" text-anchor="middle">Trivy + Semgrep</text>
+      <text x="330" y="102" class="arch-node-sub" text-anchor="middle">SAST gate</text>
+
+      <rect x="415" y="55" width="105" height="50" rx="8" class="arch-node-box"/>
+      <text x="467" y="76" class="arch-node-label" text-anchor="middle">PR Size</text>
+      <text x="467" y="91" class="arch-node-sub" text-anchor="middle">&lt;500 lines rule</text>
+      <text x="467" y="102" class="arch-node-sub" text-anchor="middle">enforced</text>
+
+      <rect x="550" y="55" width="105" height="50" rx="8" class="arch-node-box"/>
+      <text x="602" y="76" class="arch-node-label" text-anchor="middle">1 Reviewer</text>
+      <text x="602" y="91" class="arch-node-sub" text-anchor="middle">approval required</text>
+      <text x="602" y="102" class="arch-node-sub" text-anchor="middle">CODEOWNERS</text>
+
+      <!-- Pass -->
+      <rect x="685" y="30" width="90" height="40" rx="8" class="arch-node-box highlight"/>
+      <text x="730" y="47" class="arch-node-label" text-anchor="middle" fill="#22c55e">✓ Merge</text>
+      <text x="730" y="62" class="arch-node-sub" text-anchor="middle">squash + merge</text>
+
+      <!-- Fail -->
+      <rect x="685" y="90" width="90" height="40" rx="8" class="arch-node-box red-node"/>
+      <text x="730" y="107" class="arch-node-label" text-anchor="middle" fill="#ef4444">✗ Blocked</text>
+      <text x="730" y="122" class="arch-node-sub" text-anchor="middle">fix &amp; repush</text>
+
+      <!-- Paths -->
+      <path id="p2a" d="M110,80 L140,80" class="arch-path blue-path" marker-end="url(#arr2)"/>
+      <path id="p2b" d="M245,80 L275,80" class="arch-path" marker-end="url(#arr2)"/>
+      <path id="p2c" d="M385,80 L415,80" class="arch-path amber-path" marker-end="url(#arr2)"/>
+      <path id="p2d" d="M520,80 L550,80" class="arch-path" marker-end="url(#arr2)"/>
+      <path id="p2e" d="M655,70 L685,50" class="arch-path" stroke="rgba(34,197,94,0.3)" marker-end="url(#arr2g)"/>
+      <path id="p2f" d="M655,90 L685,110" class="arch-path" stroke="rgba(239,68,68,0.3)" marker-end="url(#arr2r)"/>
+
+      <!-- Packets -->
+      <circle r="4" fill="#38bdf8" filter="url(#glow2)"><animateMotion dur="2s" repeatCount="indefinite" begin="0s"><mpath href="#p2a"/></animateMotion></circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow2)"><animateMotion dur="2s" repeatCount="indefinite" begin="0.4s"><mpath href="#p2b"/></animateMotion></circle>
+      <circle r="4" fill="#f59e0b" filter="url(#glow2)"><animateMotion dur="2s" repeatCount="indefinite" begin="0.8s"><mpath href="#p2c"/></animateMotion></circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow2)"><animateMotion dur="2s" repeatCount="indefinite" begin="1.2s"><mpath href="#p2d"/></animateMotion></circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow2)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.5s"><mpath href="#p2e"/></animateMotion></circle>
+      <circle r="4" fill="#ef4444" filter="url(#glow2)" opacity="0.6"><animateMotion dur="1.5s" repeatCount="indefinite" begin="1.5s"><mpath href="#p2f"/></animateMotion></circle>
+    </svg>
+  </div>
+</div>
+</div>
         </div>
 
         <!-- INC-003 -->
@@ -1035,10 +1219,85 @@
             <span class="tag">CI/CD</span>
           </div>
           <div class="incident-actions">
+            <button class="arch-toggle" onclick="toggleArch(3,this)"><span>⬡</span> Architecture <span class="arch-icon">▾</span></button>
             <a href="https://github.com/anjali-gambhava/NetVision" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
-          </div>
+          <div class="arch-panel" id="arch-panel-3">
+  <div class="arch-label">// live architecture · network traffic analysis flow</div>
+  <div class="arch-svg-wrap">
+    <svg id="arch-svg-3" viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;height:auto;display:block;">
+      <defs>
+        <filter id="glow3"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" class="arch-arrow"/></marker>
+        <marker id="arr3r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(239,68,68,0.7)"/></marker>
+        <marker id="arr3b" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(56,189,248,0.6)"/></marker>
+      </defs>
+      <!-- Nodes -->
+      <rect x="10" y="65" width="105" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="62" y="84" class="arch-node-label" text-anchor="middle">Network</text>
+      <text x="62" y="99" class="arch-node-sub" text-anchor="middle">Live Traffic</text>
+      <text x="62" y="110" class="arch-node-sub" text-anchor="middle">eth0 / lo</text>
+
+      <rect x="145" y="65" width="110" height="50" rx="8" class="arch-node-box"/>
+      <text x="200" y="84" class="arch-node-label" text-anchor="middle">Packet Capture</text>
+      <text x="200" y="99" class="arch-node-sub" text-anchor="middle">pcap / scapy</text>
+      <text x="200" y="110" class="arch-node-sub" text-anchor="middle">promiscuous mode</text>
+
+      <rect x="285" y="65" width="110" height="50" rx="8" class="arch-node-box"/>
+      <text x="340" y="84" class="arch-node-label" text-anchor="middle">DPI Engine</text>
+      <text x="340" y="99" class="arch-node-sub" text-anchor="middle">Deep Packet</text>
+      <text x="340" y="110" class="arch-node-sub" text-anchor="middle">Inspection</text>
+
+      <rect x="425" y="20" width="110" height="50" rx="8" class="arch-node-box amber-node"/>
+      <text x="480" y="39" class="arch-node-label" text-anchor="middle" fill="#f59e0b">Anomaly</text>
+      <text x="480" y="54" class="arch-node-sub" text-anchor="middle">Detection</text>
+      <text x="480" y="65" class="arch-node-sub" text-anchor="middle">threshold rules</text>
+
+      <rect x="425" y="110" width="110" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="480" y="129" class="arch-node-label" text-anchor="middle">Protocol</text>
+      <text x="480" y="144" class="arch-node-sub" text-anchor="middle">TCP/UDP/ICMP</text>
+      <text x="480" y="155" class="arch-node-sub" text-anchor="middle">filter + parse</text>
+
+      <rect x="565" y="20" width="90" height="50" rx="8" class="arch-node-box red-node"/>
+      <text x="610" y="39" class="arch-node-label" text-anchor="middle" fill="#ef4444">⚠ Alert</text>
+      <text x="610" y="54" class="arch-node-sub" text-anchor="middle">anomaly flagged</text>
+      <text x="610" y="65" class="arch-node-sub" text-anchor="middle">log + notify</text>
+
+      <rect x="565" y="110" width="90" height="50" rx="8" class="arch-node-box blue-node"/>
+      <text x="610" y="129" class="arch-node-label" text-anchor="middle">Parsed</text>
+      <text x="610" y="144" class="arch-node-sub" text-anchor="middle">packet data</text>
+      <text x="610" y="155" class="arch-node-sub" text-anchor="middle">structured</text>
+
+      <rect x="690" y="65" width="110" height="50" rx="8" class="arch-node-box highlight"/>
+      <text x="745" y="84" class="arch-node-label" text-anchor="middle" fill="#22c55e">Dashboard</text>
+      <text x="745" y="99" class="arch-node-sub" text-anchor="middle">real-time viz</text>
+      <text x="745" y="110" class="arch-node-sub" text-anchor="middle">graphs + stats</text>
+
+      <!-- Paths -->
+      <path id="p3a" d="M115,90 L145,90" class="arch-path blue-path" marker-end="url(#arr3b)"/>
+      <path id="p3b" d="M255,90 L285,90" class="arch-path" marker-end="url(#arr3)"/>
+      <path id="p3c" d="M395,78 L425,45" class="arch-path amber-path" marker-end="url(#arr3)"/>
+      <path id="p3d" d="M395,100 L425,135" class="arch-path blue-path" marker-end="url(#arr3b)"/>
+      <path id="p3e" d="M535,45 L565,45" class="arch-path" stroke="rgba(239,68,68,0.3)" marker-end="url(#arr3r)"/>
+      <path id="p3f" d="M535,135 L565,135" class="arch-path blue-path" marker-end="url(#arr3b)"/>
+      <path id="p3g" d="M655,45 Q672,45 672,90 L690,90" class="arch-path" marker-end="url(#arr3)"/>
+      <path id="p3h" d="M655,135 Q672,135 672,90 L690,105" class="arch-path" marker-end="url(#arr3)"/>
+
+      <!-- Packets — many colors to show different traffic types -->
+      <circle r="3.5" fill="#38bdf8" filter="url(#glow3)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0s"><mpath href="#p3a"/></animateMotion></circle>
+      <circle r="3" fill="#a78bfa" filter="url(#glow3)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.5s"><mpath href="#p3a"/></animateMotion></circle>
+      <circle r="3.5" fill="#22c55e" filter="url(#glow3)"><animateMotion dur="2s" repeatCount="indefinite" begin="0.2s"><mpath href="#p3b"/></animateMotion></circle>
+      <circle r="3.5" fill="#f59e0b" filter="url(#glow3)"><animateMotion dur="1.8s" repeatCount="indefinite" begin="0.6s"><mpath href="#p3c"/></animateMotion></circle>
+      <circle r="3.5" fill="#38bdf8" filter="url(#glow3)"><animateMotion dur="1.8s" repeatCount="indefinite" begin="1s"><mpath href="#p3d"/></animateMotion></circle>
+      <circle r="3.5" fill="#ef4444" filter="url(#glow3)" opacity="0.8"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.4s"><mpath href="#p3e"/></animateMotion></circle>
+      <circle r="3.5" fill="#38bdf8" filter="url(#glow3)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.8s"><mpath href="#p3f"/></animateMotion></circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow3)"><animateMotion dur="2s" repeatCount="indefinite" begin="0.3s"><mpath href="#p3g"/></animateMotion></circle>
+      <circle r="4" fill="#22c55e" filter="url(#glow3)"><animateMotion dur="2s" repeatCount="indefinite" begin="1.2s"><mpath href="#p3h"/></animateMotion></circle>
+    </svg>
+  </div>
+</div>
+</div>
         </div>
 
       </div>
@@ -1273,11 +1532,21 @@
     document.querySelectorAll('.services-grid .reveal').forEach((el, i) => {
       el.style.transitionDelay = (i * 0.04) + 's';
     });
-  </script>
 
-<script>
-(function(){
-  var canvas = document.getElementById('bgCanvas');
+    // ── Architecture diagram toggles ──
+    function toggleArch(id, btn) {
+      const panel = document.getElementById('arch-panel-' + id);
+      const isOpen = panel.classList.contains('open');
+      panel.classList.toggle('open');
+      btn.classList.toggle('open');
+      if (!isOpen) {
+        // scroll into view slightly
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+      }
+    }
+  </script>
+  <script>
+  var canvas = document.getElementById('bgCanvas')');
   var ctx = canvas.getContext('2d');
   var W, H, cols, rows, cellSize = 40;
   var nodes = [];
@@ -1451,6 +1720,7 @@
 </script>
 </body>
 </html>
+
 
 
 
