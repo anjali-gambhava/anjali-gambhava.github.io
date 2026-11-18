@@ -1022,6 +1022,7 @@
             <a href="https://github.com/anjali-gambhava/zero-trust-gcp-deployer" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
+          </div>
           <div class="arch-panel" id="arch-panel-1">
   <div class="arch-label">// live architecture · zero-trust deploy flow</div>
   <div class="arch-svg-wrap">
@@ -1097,7 +1098,6 @@
     </svg>
   </div>
 </div>
-</div>
         </div>
 
         <!-- INC-002 -->
@@ -1128,6 +1128,7 @@
             <a href="https://github.com/anjali-gambhava/pr-governance-engine" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
+          </div>
           <div class="arch-panel" id="arch-panel-2">
   <div class="arch-label">// live architecture · PR governance flow</div>
   <div class="arch-svg-wrap">
@@ -1192,7 +1193,6 @@
     </svg>
   </div>
 </div>
-</div>
         </div>
 
         <!-- INC-003 -->
@@ -1223,6 +1223,7 @@
             <a href="https://github.com/anjali-gambhava/NetVision" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">
               <i class="fab fa-github"></i> GitHub ↗
             </a>
+          </div>
           <div class="arch-panel" id="arch-panel-3">
   <div class="arch-label">// live architecture · network traffic analysis flow</div>
   <div class="arch-svg-wrap">
@@ -1296,7 +1297,6 @@
       <circle r="4" fill="#22c55e" filter="url(#glow3)"><animateMotion dur="2s" repeatCount="indefinite" begin="1.2s"><mpath href="#p3h"/></animateMotion></circle>
     </svg>
   </div>
-</div>
 </div>
         </div>
 
@@ -1533,20 +1533,9 @@
       el.style.transitionDelay = (i * 0.04) + 's';
     });
 
-    // ── Architecture diagram toggles ──
-    function toggleArch(id, btn) {
-      const panel = document.getElementById('arch-panel-' + id);
-      const isOpen = panel.classList.contains('open');
-      panel.classList.toggle('open');
-      btn.classList.toggle('open');
-      if (!isOpen) {
-        // scroll into view slightly
-        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-      }
-    }
   </script>
   <script>
-  var canvas = document.getElementById('bgCanvas')');
+  var canvas = document.getElementById('bgCanvas');
   var ctx = canvas.getContext('2d');
   var W, H, cols, rows, cellSize = 40;
   var nodes = [];
@@ -1718,8 +1707,25 @@
   });
 })();
 </script>
+
+  <script>
+    /* Global arch toggle — must be outside any closure so onclick can reach it */
+    function toggleArch(id, btn) {
+      var panel = document.getElementById('arch-panel-' + id);
+      if (!panel) return;
+      var isOpen = panel.classList.contains('open');
+      panel.classList.toggle('open');
+      btn.classList.toggle('open');
+      if (!isOpen) {
+        setTimeout(function(){ panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 150);
+      }
+    }
+  </script>
 </body>
 </html>
+
+
+
 
 
 
